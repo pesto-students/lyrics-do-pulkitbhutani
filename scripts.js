@@ -3,6 +3,10 @@ const form = document.querySelector('.search-form');
 form.addEventListener('submit', function(f){
 
     //remove old items from the list
+    if(document.getElementById('songList').getElementsByTagName('li').length >= 1)
+    {
+        document.getElementById('songList').innerHTML = '';
+    }
 
     const song = document.getElementById('song').value;
     f.preventDefault();
@@ -38,6 +42,9 @@ function fetchSuggestions(song)
             let button = document.createElement('button');
             button.innerHTML='Show Lyrics';
             button.click(song.artist.name);
+            button.className = 'lyrics-btn';
+            button.id = 'lyrics-btn';
+            button.value = song.artist.name + ',' + song.title;
             li.appendChild(node);
             li.appendChild(button);
             songList.appendChild(li);

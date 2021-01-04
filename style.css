@@ -56,12 +56,22 @@ button{
 
   li{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    padding: 2px 16px 10px 10px;
+    width: 500px;   
+    padding: 10px 16px 10px 10px;
+    margin: 10px;
     transition: 0.3s;
+    font-size: 16px;
   }
 
-  .song-list{
+  .song-ul{
+    display: table;
+    margin: 0 auto;
     list-style-type:none;
   }
+
+  
+
+
+  
 
   
