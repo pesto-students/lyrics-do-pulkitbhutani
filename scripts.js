@@ -23,6 +23,7 @@ songs.addEventListener('click', e => {
     }
 });
 
+
 function fetchSuggestions(e){
     e.preventDefault();
     songs.innerHTML = '';
