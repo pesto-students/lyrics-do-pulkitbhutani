@@ -51,7 +51,6 @@ function fetchSuggestions(e){
             `
         ).join('')
 
-        paginate.innerHTML = `<button class="paginate-button">Next</button>`
     })
     .catch(function(error) {
         console.log(error); 
@@ -59,12 +58,9 @@ function fetchSuggestions(e){
 }
 
 
-function fetchPage(currentPage)
-
 function fetchLyrics(artist, title){
-    
     const lyricsApiUrl = 'https://api.lyrics.ovh/v1/' + artist + '/' + title;
-
+    
     fetch(lyricsApiUrl)
     .then(function(response) {
         return response.json();
@@ -74,7 +70,7 @@ function fetchLyrics(artist, title){
         paginate.innerHTML = ``
 
         if(data.lyrics!==''){
-            var formattedString = data.lyrics.split(",").join("\n");
+            var formattedString = data.lyrics.replace(/(\r|\n)/g, '<br>');;
             songs.innerHTML =
                 `<h1 class="lyrics-heading"><b>${artist}</b> - ${title}</h1>
                 <p class="lyrics">${formattedString}</p>`
