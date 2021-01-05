@@ -1,7 +1,7 @@
 const form = document.querySelector('.search-form');
 const search = document.getElementById('search');
 const songs = document.getElementById('songs');
-
+const paginate = document.getElementById('paginate');
 
 form.addEventListener('submit', fetchSuggestions);
 
@@ -36,14 +36,17 @@ function fetchSuggestions(e){
         return response.json();
     })
     .then(function(data) {
-        console.log(data.data);
+        console.log(data);
 
         songs.innerHTML = data.data.map(song=> 
             `<div class="song">
                 <h3 class="song-heading">${song.artist.name} - ${song.title}</h3>
                 <button class="lyrics-btn" id="lyrics" data-artistName = "${song.artist.name}" data-title = "${song.title}">Show Lyrics</button>
-            </div>`
+            </div>
+            `
         ).join('')
+
+        paginate.innerHTML = `<button class="paginate-button">Next</button>`
     })
     .catch(function(error) {
         console.log(error);
@@ -59,7 +62,9 @@ function fetchLyrics(artist, title){
         return response.json();
     }).then(function(data) {
         console.log(data);
-        
+
+        paginate.innerHTML = ``
+
         if(data.lyrics!==''){
             var formattedString = data.lyrics.split(",").join("\n");
             songs.innerHTML =
