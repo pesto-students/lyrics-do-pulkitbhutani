@@ -5,19 +5,20 @@
         <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     </head>
     <body>
-        <div class="hero-image">
-            <div class="hero-content">
-              <h1 style="font-size:50px;">LyricsDo</h1>
-              <form class="search-form">
-                <input type="text" class="form-input" placeholder="Enter Artist or Song Name..." id="song" required>
-                <button type="submit" class="form-button">Search</button>
-              </form>
+        
+            <div class="hero-image">
+                <div class="hero-content">
+                <h1 style="font-size:50px;">LyricsDo</h1>
+                <form class="search-form">
+                    <input type="text" id="search" class="search-input" placeholder="Enter Artist or Song Name..." required>
+                    <button class="search-btn" type="submit">Search</button>
+                </form>
+                </div>
+            </div>  
+            
+            <div class="content-container" id="songs">
             </div>
-          </div>  
-          
-          <div class="content">
-              <ul class="song-ul" id="songList"></ul>
-          </div>
+        
         <script src="scripts.js"></script>
     </body>
 </html>

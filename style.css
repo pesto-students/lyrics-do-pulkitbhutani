@@ -13,13 +13,13 @@ form{
     border-radius: 6px;
 }
 
-.form-input{
+.search-input{
     flex-grow:2;
     font-size: 16px;
     border:none;
 }
 
-.form-input:focus{
+.search-input:focus{
     outline: none;
 }
 
@@ -54,20 +54,28 @@ button{
       color: white;
   }
 
-  li{
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    width: 500px;   
-    padding: 10px 16px 10px 10px;
-    margin: 10px;
-    transition: 0.3s;
-    font-size: 16px;
+  .song{
+      display: flex;
+      flex-direction:row;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      padding: 10px 16px 10px 10px;
+      margin: auto;
+      width: 50%;
   }
 
-  .song-ul{
-    display: table;
-    margin: 0 auto;
-    list-style-type:none;
+  .song-heading{
+      flex-grow: 2;
   }
+
+  .lyrics{
+    text-align: center;
+  }
+
+  .lyrics-heading{
+      text-align: center;
+  }
+
+  
 
   
 

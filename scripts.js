@@ -1,23 +1,34 @@
 const form = document.querySelector('.search-form');
+const search = document.getElementById('search');
+const songs = document.getElementById('songs');
 
-form.addEventListener('submit', function(f){
 
-    //remove old items from the list
-    if(document.getElementById('songList').getElementsByTagName('li').length >= 1)
-    {
-        document.getElementById('songList').innerHTML = '';
+form.addEventListener('submit', fetchSuggestions);
+
+songs.addEventListener('click', e => {
+    var element = e.target;
+
+    if(element.nodeName == "BUTTON" && element.classList.contains("lyrics-btn")) {
+        const songInfo = e.path.find(item => {
+            return item.classList.contains('lyrics-btn');
+        })
+
+        if(songInfo){
+            const artistName = songInfo.getAttribute('data-artistName');
+            const songTitle = songInfo.getAttribute('data-title');
+            fetchLyrics(artistName,songTitle);
+        }
+    } else {
+        return false;
     }
+});
 
-    const song = document.getElementById('song').value;
-    f.preventDefault();
-    console.log(song);
-    fetchSuggestions(song);
-})
-
-function fetchSuggestions(song)
-{
-
-    const suggestUrl = 'https://api.lyrics.ovh/suggest/'+song;
+function fetchSuggestions(e){
+    e.preventDefault();
+    songs.innerHTML = '';
+    const term = search.value;
+    
+    const suggestUrl = 'https://api.lyrics.ovh/suggest/' + term;
     console.log(suggestUrl); 
 
     fetch(suggestUrl)
@@ -26,34 +37,38 @@ function fetchSuggestions(song)
     })
     .then(function(data) {
         console.log(data.data);
-        populateList(data.data);
+
+        songs.innerHTML = data.data.map(song=> 
+            `<div class="song">
+                <h3 class="song-heading">${song.artist.name} - ${song.title}</h3>
+                <button class="lyrics-btn" id="lyrics" data-artistName = "${song.artist.name}" data-title = "${song.title}">Show Lyrics</button>
+            </div>`
+        ).join('')
     })
     .catch(function(error) {
         console.log(error);
       });
+}
 
-    function populateList(data){
-        const songList = document.getElementById('songList');
-        for (song of data){
-            console.log(song);
-            let li = document.createElement('li');
-            li.className = 'song-li';
-            let node = document.createTextNode(song.artist.name + ' - ' + song.title);
-            let button = document.createElement('button');
-            button.innerHTML='Show Lyrics';
-            button.click(song.artist.name);
-            button.className = 'lyrics-btn';
-            button.id = 'lyrics-btn';
-            button.value = song.artist.name + ',' + song.title;
-            li.appendChild(node);
-            li.appendChild(button);
-            songList.appendChild(li);
-        }
-    }
+function fetchLyrics(artist, title){
+    
+    const lyricsApiUrl = 'https://api.lyrics.ovh/v1/' + artist + '/' + title;
+
+    fetch(lyricsApiUrl)
+    .then(function(response) {
+        return response.json();
+    }).then(function(data) {
+        console.log(data);
         
+        if(data.lyrics!==''){
+            var formattedString = data.lyrics.split(",").join("\n");
+            songs.innerHTML =
+                `<h1 class="lyrics-heading"><b>${artist}</b> - ${title}</h1>
+                <p class="lyrics">${formattedString}</p>`
+            } else {
+                songs.innerHTML =
+                `<h1 class="lyrics-heading">Lyrics Not Found</h1>`
+            }
+    })
 }
 
-function showLyrics()
-{
-    console.log(song.artist.name);
-}
