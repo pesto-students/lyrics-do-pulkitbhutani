@@ -3,6 +3,10 @@ const search = document.getElementById('search');
 const songs = document.getElementById('songs');
 const paginate = document.getElementById('paginate');
 
+const currentPage = 1;
+const pageSize = 5;
+
+
 form.addEventListener('submit', fetchSuggestions);
 
 songs.addEventListener('click', e => {
@@ -50,9 +54,12 @@ function fetchSuggestions(e){
         paginate.innerHTML = `<button class="paginate-button">Next</button>`
     })
     .catch(function(error) {
-        console.log(error);
+        console.log(error); 
       });
 }
+
+
+function fetchPage(currentPage)
 
 function fetchLyrics(artist, title){
     
@@ -75,6 +82,8 @@ function fetchLyrics(artist, title){
                 songs.innerHTML =
                 `<h1 class="lyrics-heading">Lyrics Not Found</h1>`
             }
-    })
+    }).catch(function(error) {
+        console.log(error); 
+      });
 }
 
